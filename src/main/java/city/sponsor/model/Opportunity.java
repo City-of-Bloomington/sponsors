@@ -337,11 +337,10 @@ public class Opportunity {
 	    return back;
 	}
 	try{
-	    qq = "update spons_opportunities set "+
-		"start_date=?,program_area=?,lead=?,season=?,"+
-		"year=?,park_cont=?,instructions=?,end_date=? "+
-		// "event_id=? "+
-		"where id=?";
+	    qq = "update spons_opportunities o set "+
+		"o.start_date=?,o.program_area=?,o.lead=?,o.season=?,"+
+		"o.year=?,o.park_cont=?,o.instructions=?,o.end_date=? "+
+		"where o.id=?";
 	    String qq2 = "select name from spons_opportunities where id=?";
 	    if(debug){
 		logger.debug(qq);
@@ -439,6 +438,11 @@ public class Opportunity {
 	}
 	return back;
     }
+    /**
+       select o.event_id,name,date_format(o.start_date,'%m/%d/%Y'),o.program_area,o.lead,o.year,o.park_cont,o.instructions,date_format(o.end_date,'%m/%d/%Y') from spons_opportunities o where o.id=810;
+
+       
+     */
 	
     //
     public String doSelect(){
@@ -448,12 +452,10 @@ public class Opportunity {
 	Connection con = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	String qq = "select "+
-	    "event_id,name, "+
-	    "date_format(start_date,'%m/%d/%Y'), "+
-	    "program_area,lead, season,year,park_cont,instructions, "+
-	    "date_format(end_date,'%m/%d/%Y') "+
-	    "from spons_opportunities where id=?";
+	String qq = "select o.event_id,o.name,date_format(o.start_date,'%m/%d/%Y'), "+
+	    "o.program_area,o.lead,o.season,o.year,o.park_cont,o.instructions,"+
+	    "date_format(o.end_date,'%m/%d/%Y') "+
+	    "from spons_opportunities o where o.id=?";
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";

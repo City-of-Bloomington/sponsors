@@ -477,7 +477,7 @@ public class Helper{
 	    "</head>\n"+
 	    "<body>\n"+
 	    "<div id=\"banner\">\n"+
-	    "<h1><a href=\""+url+"RiskTrack\">RiskTrack</a></h1><h2>City of Bloomington, Indiana</h2>\n"+
+	    "<h1><a href=\""+url+"Sponsors\">Sponsors</a></h1><h2>City of Bloomington, Indiana</h2>\n"+
 	    "</div>";
 	return banner;
     }
@@ -486,7 +486,7 @@ public class Helper{
 	String menu = "<div class=\"menuBar\">\n"+
 	    "<a href=\""+url+"\">Home</a>\n";
 	if(logged){
-	    menu += "<a href=\""+url+"RiskTrack/Logout\">Logout</a>\n";
+	    menu += "<a href=\""+url+"Sponsors/Logout\">Logout</a>\n";
 	}
 	menu += "</div>\n";
 	return menu;

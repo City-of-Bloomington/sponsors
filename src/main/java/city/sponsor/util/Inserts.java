@@ -41,22 +41,17 @@ public class Inserts{
 	String banner = "<head>\n"+
 	    "<meta http-equiv=\"Content-Type\" content=\"application/xhtml+xml; charset=utf-8\" />\n"+
 	    "<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\" />\n"+
-	    "<link rel=\"SHORTCUT ICON\" href=\"https://apps.bloomington.in.gov/favicon.ico\" />\n"+
-	    "<style type=\"text/css\" media=\"screen\">\n"+
-	    "/*<![CDATA[*/"+			
-	    "           @import url(\"https://apps.bloomington.in.gov/skins/isotope/skin.css\");\n"+
-	    "/*]]>*/\n"+		
-	    "</style>\n"+
+	    "<link rel=\"shortcut icon\" href=\""+url+"images/favicon.ico\" />\n"+
+	    "<link rel=\"stylesheet\" href=\""+url+"css/skins.css\" type=\"text/css\" media=\"screen\" />\n"+
 	    "<style type=\"text/css\" media=\"print\">\n"+
-	    "/*<![CDATA[*/"+			
-	    "      @import url(\"https://apps.bloomington.in.gov/skins/isotope/print.css\");\n"+
 	    "body { color:black; background-color:white; margin:0px; font-family:sans-serif; font-size:11pt; }\n"+
-	    "/*]]>*/\n"+			
 	    "</style>\n"+
-	    "<link rel=\"stylesheet\" href=\""+url+"css/jquery-ui.min-1.13.2.css\" type=\"text/css\" media=\"all\" />"+
+	    "<link rel=\"stylesheet\" href=\""+url+"css/jquery-ui.min-1.13.2.css\" type=\"text/css\" media=\"all\" />\n"+
 	    "<link rel=\"stylesheet\" href=\""+url+"css/jquery.ui.theme.min-1.13.2.css\" type=\"text/css\" media=\"all\" />\n"+	
-	    "<style type=\"text/css\">"+  // user defined
-	    "/*<![CDATA[*/"+
+	    "<style type=\"text/css\">\n"+
+	    ".ui-datepicker-prev .ui-icon, .ui-datepicker-next .ui-icon {\n "+
+	    " background-image: url(\"js/images/ui-icons_228ef1_256x240.png\");\n"+
+	    "}\n "+
 	    "table.wide {width:100%;border:none}"+
 	    "table.widesolid {width:100%;border-style:solid}"+
 	    "table.box {width:100%;border:2px solid}"+
@@ -78,13 +73,11 @@ public class Inserts{
 	    "div.green { font-size:80%; color:green}\n"+
 	    "span.center {text-align:center}\n"+
 	    "span.green { font-size:80%; color:green}\n"+
-	    "/*]]>*/\n"+
 	    "</style>\n"+
 	    //
 	    // Java Script common for all pages
 	    //
 	    " <script type=\"text/javascript\">                 \n"+
-	    "//<![CDATA[                                        \n"+
 	    "  function checkDate(dt){                          \n"+     
 	    "    var dd = dt.value;                             \n"+
 	    "   if(!dd || dd.length == 0) return true;          \n"+
@@ -196,7 +189,6 @@ public class Inserts{
 	    "        }else {                                          \n"+
 	    "         time.value = time.value+\"0\";                   \n"+
 	    "  }}}}}                                             \n"+
-	    " //]]>                                    \n"+			
 	    " </script>				                  \n"+
 	    "<title>Sponsors - City of Bloomington, Indiana</title>\n"+
 	    "</head>\n"+

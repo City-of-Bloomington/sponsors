@@ -20,10 +20,10 @@ import city.sponsor.util.*;
 /**
  *
  * for ADFS login
- * 
+ * change to /Login if you want to use openid ADFS
+ *
  */
-// uncomment this line if you want to use ADFS
-@WebServlet(urlPatterns = {"/Login","/login"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/OpenidLogin","/openidlogin"}, loadOnStartup = 1)
 public class LoginServlet extends TopServlet {
 
     static Logger logger = LogManager.getLogger(LoginServlet.class);
