@@ -158,7 +158,7 @@ public class SponFile{
     public String getPath(String dir, String url){
 	String path = dir;
 	String yy="", separator="/"; // linux
-	if(url.indexOf("8080") > -1){
+	if(url != null && url.indexOf("8080") > -1){
 	    separator = "\\"; // windows
 	}
 	if(!date.equals("")){

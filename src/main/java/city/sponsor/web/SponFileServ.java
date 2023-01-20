@@ -64,7 +64,7 @@ public class SponFileServ extends TopServlet{
 	boolean connectDbOk = false, success = true,
 	    sizeLimitExceeded = false;
 	String saveDirectory ="",file_path="";
-	String newFile = "",  cur_path="";
+	String newFile = "";
 	String action="", date="", load_file="";
 	String id="", spon_id = "", notes="", action2="";
 	
@@ -81,7 +81,7 @@ public class SponFileServ extends TopServlet{
 	// specified directory
 	// 
 	// we need this path for save purpose
-	String pc_path = "c:\\tomcat\\webapps\\sponsors\\files\\";
+	// String pc_path = "c:\\tomcat\\webapps\\sponsors\\files\\";
 	session = req.getSession(false);
 
 	if(session != null){
@@ -103,7 +103,7 @@ public class SponFileServ extends TopServlet{
 	// we have to make sure that this directory exits
 	// if not we create it
 	//
-	File myDir = new File(cur_path);
+	File myDir = new File(server_path);
 	if(!myDir.isDirectory()){
 	    myDir.mkdirs();
 	}
@@ -226,7 +226,7 @@ public class SponFileServ extends TopServlet{
 				sponFile.composeName(ext);
 				newFile = sponFile.getName();
 				if(!newFile.equals("")){
-				    saveDirectory = sponFile.getFullPath(cur_path, ext, url2);
+				    saveDirectory = sponFile.getFullPath(server_path,ext, url2);
 				    File file = new File(saveDirectory, newFile);
 				    item.write(file);
 				}
@@ -302,7 +302,7 @@ public class SponFileServ extends TopServlet{
 	else if(action.equals("download")){
 	    String back = sponFile.doSelect();
 	    String filename = sponFile.getName();
-	    String filePath = sponFile.getPath(cur_path, url2);
+	    String filePath = sponFile.getPath(server_path, url);
 	    filePath += filename;
 	    doDownload(req, res, filePath, sponFile);
 	    return;
@@ -441,7 +441,7 @@ public class SponFileServ extends TopServlet{
 
     void doDownload(HttpServletRequest request,
 		    HttpServletResponse response,
-		    String inspFile,
+		    String inputFile,
 		    SponFile sponFile){
 		
 	BufferedInputStream input = null;
@@ -450,9 +450,9 @@ public class SponFileServ extends TopServlet{
 	    //
 	    // Decode the file name (might contain spaces and on) and prepare file object.
 	    // File file = new File(filePath, URLDecoder.decode(inspFile, "UTF-8"));
-	    File file = new File(inspFile);
+	    File file = new File(inputFile);
 	    // Check if file actually exists in filesystem.
-	    if (!file.exists()) {
+	    if (file == null || !file.exists()) {
 		// Do your thing if the file appears to be non-existing.
 		// Throw an exception, or send 404, or show default/warning page, or just ignore it.
 		response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404.
@@ -460,7 +460,7 @@ public class SponFileServ extends TopServlet{
 	    }
 	    //
 	    // Get content type by filename.
-	    String contentType = getServletContext().getMimeType(file.getName());
+	    String contentType = context.getMimeType(file.getName());
 	    //
 	    // To add new content types, add new mime-mapping entry in web.xml.
 	    if (contentType == null) {
@@ -468,23 +468,27 @@ public class SponFileServ extends TopServlet{
 	    }
 	    //			
 	    // Init servlet response.
-	    response.reset();
-	    response.setBufferSize(DEFAULT_BUFFER_SIZE);
-	    response.setContentType(contentType);
-	    response.setHeader("Content-Length", String.valueOf(file.length()));
-	    response.setHeader("Content-Disposition", "attachment; filename=\"" + (sponFile.getOldName().equals("")?sponFile.getName():sponFile.getOldName()) + "\"");
-			
-	    // Prepare streams.
-	    //
-            // Open streams.
-            input = new BufferedInputStream(new FileInputStream(file), DEFAULT_BUFFER_SIZE);
-            output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
-            // Write file contents to response.
-            byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-            int length;
-            while ((length = input.read(buffer)) > 0) {
-                output.write(buffer, 0, length);
-            }
+	    if(response != null){
+		response.reset();
+		response.setBufferSize(DEFAULT_BUFFER_SIZE);
+		response.setContentType(contentType);
+		response.setHeader("Content-Length", String.valueOf(file.length()));
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + (sponFile.getOldName().isEmpty()?sponFile.getName():sponFile.getOldName()) + "\"");
+		// Prepare streams.
+		//
+		// Open streams.
+		input = new BufferedInputStream(new FileInputStream(file), DEFAULT_BUFFER_SIZE);
+		output = new BufferedOutputStream(response.getOutputStream(), DEFAULT_BUFFER_SIZE);
+		// Write file contents to response.
+		byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+		int length;
+		while ((length = input.read(buffer)) > 0) {
+		    output.write(buffer, 0, length);
+		}
+	    }
+	    else{
+		System.err.println(" response is null ");
+	    }
 	}
 	catch(Exception ex){
 	    logger.error(ex);
