@@ -7,6 +7,7 @@
 <web-app>
     <!-- General description of your web application -->
     <display-name>Sponsors</display-name>
+    <absolute-ordering/>   
     <description>
     </description>
     <filter>
