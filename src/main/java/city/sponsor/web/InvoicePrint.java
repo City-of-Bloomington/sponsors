@@ -39,8 +39,9 @@ import org.apache.logging.log4j.Logger;
 @WebServlet(urlPatterns = {"/InvoicePrint"})
 public class InvoicePrint extends TopServlet{
 
-    static final long serialVersionUID = 10L;	
-    static NumberFormat cf = NumberFormat.getCurrencyInstance();		
+    static final long serialVersionUID = 10L;
+    public final static Locale local = new Locale("en","US");    
+    static NumberFormat cf = NumberFormat.getCurrencyInstance(local);		
     static Logger logger = LogManager.getLogger(InvoicePrint.class);
     /**
      * @param req

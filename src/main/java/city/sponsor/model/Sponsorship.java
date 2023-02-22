@@ -594,25 +594,77 @@ public class Sponsorship {
 	
     public String doDelete(){
 		
-	String back = "", qq = "";
+	String back = "", qq="";
 		
 	Connection con = null;
-	PreparedStatement pstmt = null;
+	PreparedStatement pstmt = null, pstmt2=null;
 	ResultSet rs = null;
-		
+	String qs = "select id from spons_payments where sponship_id=?";
+	// we get pay_id
+	String qs2 = "select inv_id from spons_invoice_pays where pay_id=?";
+	// we get inv_id
+	// if we have receipts we can not delete
+	String qs3 = "select count(*) from spons_receipts where inv_id=?";
+	String qd = "delete from spons_invoice_pays where inv_id=?";
+	String qd2 = "delete from spons_invoices where id=? ";
+	String qd3 = "delete from spons_payments where sponship_id=?";
+	String qd4 = "delete from  spons_sponsorships where id=?";		
 	con = Helper.getConnection();
 	if(con == null){
 	    back = "Could not connect to DB";
 	    return back;
 	}
 	try{
-	    qq = "delete from  spons_sponsorships where id=?";
-	    if(debug){
-		logger.debug(qq);
-	    }
-	    pstmt = con.prepareStatement(qq);
+
+	    qq = qs;
+	    pstmt = con.prepareStatement(qs);
 	    pstmt.setString(1,id);
-	    pstmt.executeUpdate();
+	    rs = pstmt.executeQuery();
+	    int pay_id=0, inv_id=0, cnt=0;
+	    if(rs.next()){
+		pay_id = rs.getInt(1);
+	    }
+	    if(pay_id > 0){
+		qq = qs2;
+		pstmt = con.prepareStatement(qs2);
+		pstmt.setInt(1, pay_id);
+		rs = pstmt.executeQuery();
+		if(rs.next()){
+		    inv_id = rs.getInt(1);
+		}
+		if(inv_id > 0){
+		    qq = qs3;
+		    pstmt = con.prepareStatement(qs3);
+		    pstmt.setInt(1, inv_id);
+		    rs = pstmt.executeQuery();
+		    if(rs.next()){
+			cnt = rs.getInt(1);
+		    }
+		}
+	    }
+	    if(cnt > 0){
+		back = "Since there are receipts we can not delete";
+		return back;
+	    }
+	    if(inv_id > 0){
+		qq = qd;
+		pstmt = con.prepareStatement(qd);
+		pstmt.setInt(1,inv_id);
+		pstmt.executeUpdate();
+		qq = qd2;
+		pstmt = con.prepareStatement(qd2);
+		pstmt.setInt(1,inv_id);
+		pstmt.executeUpdate();		
+	    }
+	    qq = qd3;
+	    pstmt2 = con.prepareStatement(qd3);
+	    pstmt2.setString(1,id);
+	    pstmt2.executeUpdate();
+	    qq = qd4;
+	    pstmt2 = con.prepareStatement(qd4);
+	    pstmt2.setString(1,id);
+	    pstmt2.executeUpdate();	    
+	    
 	}
 	catch(Exception ex){
 	    back += ex+":"+qq;

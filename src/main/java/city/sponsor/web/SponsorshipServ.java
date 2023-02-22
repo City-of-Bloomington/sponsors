@@ -451,6 +451,11 @@ public class SponsorshipServ extends TopServlet{
 			    "type=\"submit\" name=\"action\" value=\"Update\" />");
 		out.println("</td>");
 	    }
+	    if(user.canEdit()){
+		out.println("<td valign=\"top\"><input "+
+			    "type=\"submit\" name=\"action\" value=\"Delete\" />");
+		out.println("</td>");
+	    }	    
 	    out.println("<td valign=\"top\"><input type=\"button\" "+
 			"onclick=\"document.location='"+url+"BenefitServ?sponship_id="+id+"'\" "+
 			"value=\"Add/Edit Benefits\" />");

@@ -22,7 +22,7 @@ public class Helper{
 
     static Logger logger = LogManager.getLogger(Helper.class);
     static int c_con = 0;
-    public final static Locale local = new Locale("Latin","US");
+    public final static Locale local = new Locale("en","US");
     public final static TimeZone tzone = TimeZone.getTimeZone("America/Indiana/Indianapolis");		
     public final static int maxActionCount = 2;
     public final static int maxSponsorshipCount = 3;
@@ -44,7 +44,7 @@ public class Helper{
     //
     // Non static variables
     //
-    static NumberFormat cf = NumberFormat.getCurrencyInstance();	
+    static NumberFormat cf = NumberFormat.getCurrencyInstance(local);	
     boolean debug = false;
 
     String [] deptIdArr = null;
