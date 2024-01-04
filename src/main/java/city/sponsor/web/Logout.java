@@ -43,9 +43,8 @@ public class Logout extends TopServlet{
 	session = req.getSession(false);
 	if(session != null){
 	    session.invalidate();
-
 	}
-	res.sendRedirect(url+"Login");	 			
+	res.sendRedirect(endpoint_logout_uri);	 			
     }
 }
 

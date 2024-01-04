@@ -20,6 +20,7 @@ public class TopServlet extends HttpServlet {
     static String cityStateZip = "Bloomington, IN 47402",
 	pobox="848", phones="(812)349-3739", sender="";
     static String defaultAttention = "";
+    static String endpoint_logout_uri = "";
     // for now 
     static Configuration config = null;
     static Logger logger = LogManager.getLogger(TopServlet.class);
@@ -46,6 +47,9 @@ public class TopServlet extends HttpServlet {
 	    if(str != null) defaultAttention = str;
 	    str = context.getInitParameter("sender");
 	    if(str != null) sender=str;
+	    	    str = context.getInitParameter("endpoint_logout_uri");
+	    if(str != null)
+		endpoint_logout_uri = str;
 	    String username = context.getInitParameter("adfs_username");
 	    String auth_end_point = context.getInitParameter("auth_end_point");
 	    String token_end_point = context.getInitParameter("token_end_point");

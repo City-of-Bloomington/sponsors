@@ -15,9 +15,10 @@ import org.apache.logging.log4j.Logger;
 /**
  *
  *
- *
+ * 
  */
-@WebServlet(urlPatterns = {"/Login"})
+// change the following to /Login to use with CAS
+@WebServlet(urlPatterns = {"/CasLogin"})
 public class Login extends TopServlet{
 
     //

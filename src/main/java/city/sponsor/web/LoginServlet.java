@@ -20,10 +20,9 @@ import city.sponsor.util.*;
 /**
  *
  * for ADFS login
- * change to /Login if you want to use openid ADFS
- *
+ * comment out if using CAS
  */
-@WebServlet(urlPatterns = {"/OpenidLogin","/openidlogin"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/Login","/login"}, loadOnStartup = 1)
 public class LoginServlet extends TopServlet {
 
     static Logger logger = LogManager.getLogger(LoginServlet.class);
@@ -39,7 +38,7 @@ public class LoginServlet extends TopServlet {
 		//
 		oidcClient.setConfig(config);
 		URI redirectUrl = oidcClient.getRequestURI();
-		System.err.println("login auth url "+redirectUrl.toString());
+		// System.err.println("login auth url "+redirectUrl.toString());
 		State state = oidcClient.getState();
 		Nonce nonce = oidcClient.getNonce();
 		session.setAttribute("state",state.toString());
